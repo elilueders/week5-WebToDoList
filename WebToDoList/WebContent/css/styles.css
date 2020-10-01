@@ -1,0 +1,62 @@
+@charset "UTF-8";
+
+* {
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+}
+
+header, footer, section {
+	text-align: center;
+	padding: 10px;
+}
+
+body {
+	background-color: #ffdb4d;
+}
+
+table {
+	border-collapse: collapse;
+	margin: auto;
+	background-color: #fff7d6;
+}
+
+table td, th {
+	border: 1px solid black;
+	padding: 10px;
+}
+
+table th {
+	text-align: center;
+	background-color: black;
+	color: white;
+	background-color: black;
+	padding-top: 30px;
+}
+
+table tr:nth-child(even) {
+	background-color: #fff0b5;
+}
+
+table tr:hover {
+	background-color: #ffcc00;
+}
+
+input[type="radio"] {
+	height: 25px;
+	width: 25px;
+}
+
+input {
+	vertical-align: middle;
+}
+
+#addRow {
+	background-color: #ffcc00;
+}
+
+#updateRow {
+	background-color: black;
+}
+
+#errorMessage {
+	color: red;
+}
