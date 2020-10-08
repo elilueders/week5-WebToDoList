@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -20,6 +22,9 @@ public class Task {
 	private String due;
 	@Column(name = "DESCRIPTION")
 	private String description;
+	@ManyToOne
+	@JoinColumn(name = "USER_ID")
+	private User user;
 
 	public Task() {
 		super();
