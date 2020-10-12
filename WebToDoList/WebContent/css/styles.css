@@ -17,10 +17,10 @@ table {
 	border-collapse: collapse;
 	margin: auto;
 	background-color: #fff7d6;
+	border: 2px solid black;
 }
 
 table td, th {
-	border: 1px solid black;
 	padding: 10px;
 }
 
@@ -33,7 +33,7 @@ table th {
 }
 
 table tr:nth-child(even) {
-	background-color: #fff0b5;
+	background-color: #ffeca0;
 }
 
 table tr:hover {
@@ -50,11 +50,16 @@ input {
 }
 
 #addRow {
-	background-color: #ffcc00;
+	background-color: black;
+	color: white;
+	height:60px;
 }
 
 #updateRow {
-	background-color: black;
+	display: none;
+	background-color: #ffcc00;
+	height: 100px;
+	
 }
 
 #errorMessage {

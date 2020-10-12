@@ -13,7 +13,7 @@
 	<header>
 		<h1>User List</h1>
 	</header>
-	<form action="navUserServlet" method="post">
+	<form action="navUserServlet" method="post" autocomplete="off">
 		<table>
 			<tr>
 				<th>Name</th>
@@ -54,6 +54,8 @@
 	</form>
 	<footer>
 		<h3 id="errorMessage">${errMsg}</h3>
+		<br>
+		<a href="viewTasksServlet">To Do List</a>
 	</footer>
 
 </body>

@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import model.Task;
+import model.User;
 
 /**
  * Servlet implementation class navServlet
@@ -32,21 +33,29 @@ public class navServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		TaskHelper dao = new TaskHelper();
+		UserHelper uh = new UserHelper();
 
 		String action = request.getParameter("taskAction");
 
 		String path = "/viewTasksServlet";
-		
-		String errMsg ="";
+
+		String errMsg = "";
 
 		if (action.equals("add")) {
 			String due = request.getParameter("due");
 			String description = request.getParameter("description");
 			if (description.isEmpty()) {
-				errMsg="*you must enter a description";
+				errMsg = "*you must enter a description";
 			} else {
 				Task taskToAdd = new Task(due, description);
 				dao.addItem(taskToAdd);
+				if (request.getParameter("user").isEmpty()) {
+				} else {
+					Integer userId = Integer.parseInt(request.getParameter("user"));
+					User user = uh.searchForUserById(userId);
+					taskToAdd.setUser(user);
+					dao.editTask(taskToAdd);
+				}
 			}
 
 		} else if (action.equals("edit")) {
@@ -54,8 +63,9 @@ public class navServlet extends HttpServlet {
 				Integer tempId = Integer.parseInt(request.getParameter("id"));
 				Task taskToEdit = dao.searchForTaskById(tempId);
 				request.setAttribute("taskToEdit", taskToEdit);
+				request.setAttribute("showUpdateRow", "display: table-row;");
 			} catch (NumberFormatException e) {
-				errMsg="*you must make a selection first";
+				errMsg = "*you must make a selection first";
 			}
 
 		} else if (action.equals("update")) {
@@ -66,12 +76,21 @@ public class navServlet extends HttpServlet {
 				String description = request.getParameter("descriptionUpdate");
 
 				Task taskToUpdate = dao.searchForTaskById(tempId);
+
+				if (request.getParameter("userUpdate").isEmpty()) {
+				} else {
+					Integer userId = Integer.parseInt(request.getParameter("userUpdate"));
+					User userToAssign = uh.searchForUserById(userId);
+					taskToUpdate.setUser(userToAssign);
+					
+				}
 				taskToUpdate.setCompleted(completed);
 				taskToUpdate.setDue(due);
 				taskToUpdate.setDescription(description);
 				dao.editTask(taskToUpdate);
+//				System.out.println(taskToUpdate.toString());
 			} catch (NumberFormatException e) {
-				errMsg="*you must make a selection first and then click <em>edit</em>";
+				errMsg = "*you must make a selection first and then click <em>edit</em>";
 			}
 
 		} else if (action.equals("del")) {
@@ -80,7 +99,7 @@ public class navServlet extends HttpServlet {
 				Task taskToDelete = dao.searchForTaskById(tempId);
 				dao.deleteTask(taskToDelete);
 			} catch (NumberFormatException e) {
-				errMsg="*you must make a selection first";
+				errMsg = "*you must make a selection first";
 			}
 
 		} else if (action.equals(" ")) {
@@ -91,7 +110,7 @@ public class navServlet extends HttpServlet {
 				taskToUpdate.setCompleted(1);
 				dao.editTask(taskToUpdate);
 			} catch (NumberFormatException e) {
-				errMsg="*you must make a selection first";
+				errMsg = "*you must make a selection first";
 			}
 		} else {
 			try {
@@ -101,7 +120,7 @@ public class navServlet extends HttpServlet {
 				taskToUpdate.setCompleted(0);
 				dao.editTask(taskToUpdate);
 			} catch (NumberFormatException e) {
-				errMsg="*you must make a selection first";
+				errMsg = "*you must make a selection first";
 			}
 		}
 		request.setAttribute("errMsg", errMsg);
