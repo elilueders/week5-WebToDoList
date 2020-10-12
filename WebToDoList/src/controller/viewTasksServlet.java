@@ -27,13 +27,15 @@ public class viewTasksServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		TaskHelper dao = new TaskHelper();
+		UserHelper uh  = new UserHelper();
 		
 		request.setAttribute("allTasks", dao.getFilteredResults("", " ORDER BY task.completed,task.due"));
+		request.setAttribute("allUsers", uh.showAllUsers());
 		
 		String path = "/to-do-list.jsp";
-		if (dao.getFilteredResults("", "").isEmpty()) {
-			path = "/index.html";
-		}
+//		if (dao.getFilteredResults("", "").isEmpty()) {
+//			path = "/index.html";
+//		}
 		getServletContext().getRequestDispatcher(path).forward(request, response);
 	}
 

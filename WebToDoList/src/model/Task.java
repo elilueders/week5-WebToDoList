@@ -1,5 +1,6 @@
 package model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -22,7 +23,7 @@ public class Task {
 	private String due;
 	@Column(name = "DESCRIPTION")
 	private String description;
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "USER_ID")
 	private User user;
 
@@ -30,10 +31,18 @@ public class Task {
 		super();
 	}
 
+
 	public Task(String due, String description) {
 		this.due = due;
 		this.description = description;
 	}
+
+	public Task(String due, String description, User user) {
+		this.due = due;
+		this.description = description;
+		this.user = user;
+	}
+
 
 	public int getId() {
 		return id;
@@ -67,6 +76,14 @@ public class Task {
 		this.description = description;
 	}
 
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
 	public String returnTaskDetail() {
 		return completed + " | " + due + " | " + description;
 	}
@@ -88,4 +105,9 @@ public class Task {
 		return result;
 	}
 
+	@Override
+	public String toString() {
+		return "Task [id=" + id + ", completed=" + completed + ", due=" + due + ", description=" + description
+				+ ", user=" + user + "]";
+	}
 }
