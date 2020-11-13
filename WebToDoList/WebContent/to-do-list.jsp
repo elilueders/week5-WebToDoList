@@ -7,12 +7,32 @@
 <meta charset="UTF-8">
 <title>To Do List</title>
 <link rel="stylesheet" href="css/styles.css">
+<script>
+	function checkForm(form) {
+		// fails if blank
+		if(form.description.value==""){
+			alert("Field is empty!");
+			form.description.focus();
+			return false;
+		}
+		//expression for alphanumeric
+		var re = /^[\w ]+$/;
+		//fails if doesn't isn't alphanumeric
+		if(!re.test(form.description.value)){
+			alert("Contains invalid characters!");
+			form.description.focus();
+			return false;
+		}
+		//success
+		return true;
+	}
+</script>
 </head>
 <body>
 	<header>
 		<h1>To Do List</h1>
 	</header>
-	<form action="navServlet" method="post" autocomplete="off">
+	<form action="navServlet" method="post" autocomplete="off" onsubmit="return checkForm(this);">
 		<table>
 			<tr>
 				<th>Sel</th>
